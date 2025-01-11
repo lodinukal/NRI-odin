@@ -1,11 +1,5 @@
 package en_gpu
 
-Error :: enum {
-	Success,
-	Out_Of_Memory,
-	Unknown,
-}
-
 Fence :: distinct rawptr
 Memory :: distinct rawptr
 Buffer :: distinct rawptr
@@ -856,8 +850,8 @@ Access_Bits :: enum u16 {
 	Shader_Resource_Storage, // GRAPHICS_SHADERS, COMPUTE_SHADER, RAY_TRACING_SHADERS, CLEAR_STORAGE
 	Argument_Buffer, // INDIRECT
 	Color_Attachment, // COLOR_ATTACHMENT
-	Depth_Stencil_Attachment_write, // DEPTH_STENCIL_ATTACHMENT
-	Depth_Dtencil_Attachment_Read, // DEPTH_STENCIL_ATTACHMENT
+	Depth_Stencil_Attachment_Write, // DEPTH_STENCIL_ATTACHMENT
+	Depth_Stencil_Attachment_Read, // DEPTH_STENCIL_ATTACHMENT
 	Copy_Source, // COPY
 	Copy_Destination, // COPY
 	Resolve_Source, // RESOLVE
@@ -1206,13 +1200,13 @@ GetFormatSupport_func_ptr_anon_3 :: #type proc "c" (
 GetQuerySize_func_ptr_anon_4 :: #type proc "c" (queryPool: ^Query_Pool) -> u32
 GetBufferMemoryDesc_func_ptr_anon_5 :: #type proc "c" (
 	device: ^Device,
-	bufferDesc: ^Buffer_Desc,
+	#by_ptr bufferDesc: Buffer_Desc,
 	memoryLocation: Memory_Location,
 	memoryDesc: ^Memory_Desc,
 )
 GetTextureMemoryDesc_func_ptr_anon_6 :: #type proc "c" (
 	device: ^Device,
-	textureDesc: ^Texture_Desc,
+	#by_ptr textureDesc: Texture_Desc,
 	memoryLocation: Memory_Location,
 	memoryDesc: ^Memory_Desc,
 )
@@ -1221,69 +1215,68 @@ GetCommandQueue_func_ptr_anon_7 :: #type proc "c" (
 	commandQueueType: Command_Queue_Type,
 	commandQueue: ^^Command_Queue,
 ) -> Result
-CommandAllocator :: distinct rawptr
 CreateCommandAllocator_func_ptr_anon_8 :: #type proc "c" (
 	commandQueue: ^Command_Queue,
-	commandAllocator: ^^CommandAllocator,
+	commandAllocator: ^^Command_Allocator,
 ) -> Result
 CreateCommandBuffer_func_ptr_anon_9 :: #type proc "c" (
-	commandAllocator: ^CommandAllocator,
+	commandAllocator: ^Command_Allocator,
 	commandBuffer: ^^Command_Buffer,
 ) -> Result
 CreateDescriptorPool_func_ptr_anon_10 :: #type proc "c" (
 	device: ^Device,
-	descriptorPoolDesc: ^Descriptor_Pool_Desc,
+	#by_ptr descriptorPoolDesc: Descriptor_Pool_Desc,
 	descriptorPool: ^^Descriptor_Pool,
 ) -> Result
 CreateBuffer_func_ptr_anon_11 :: #type proc "c" (
 	device: ^Device,
-	bufferDesc: ^Buffer_Desc,
+	#by_ptr bufferDesc: Buffer_Desc,
 	buffer: ^^Buffer,
 ) -> Result
 CreateTexture_func_ptr_anon_12 :: #type proc "c" (
 	device: ^Device,
-	textureDesc: ^Texture_Desc,
+	#by_ptr textureDesc: Texture_Desc,
 	texture: ^^Texture,
 ) -> Result
 CreateBufferView_func_ptr_anon_13 :: #type proc "c" (
-	bufferViewDesc: ^Buffer_View_Desc,
+	#by_ptr bufferViewDesc: Buffer_View_Desc,
 	bufferView: ^^Descriptor,
 ) -> Result
 CreateTexture1DView_func_ptr_anon_14 :: #type proc "c" (
-	textureViewDesc: ^Texture_1D_View_Desc,
+	#by_ptr textureViewDesc: Texture_1D_View_Desc,
 	textureView: ^^Descriptor,
 ) -> Result
 CreateTexture2DView_func_ptr_anon_15 :: #type proc "c" (
-	textureViewDesc: ^Texture_2D_View_Desc,
+	#by_ptr textureViewDesc: Texture_2D_View_Desc,
 	textureView: ^^Descriptor,
 ) -> Result
 CreateTexture3DView_func_ptr_anon_16 :: #type proc "c" (
-	textureViewDesc: ^Texture_3D_View_Desc,
+	#by_ptr textureViewDesc: Texture_3D_View_Desc,
 	textureView: ^^Descriptor,
 ) -> Result
 CreateSampler_func_ptr_anon_17 :: #type proc "c" (
 	device: ^Device,
-	samplerDesc: ^Sampler_Desc,
+	#by_ptr samplerDesc: Sampler_Desc,
 	sampler: ^^Descriptor,
 ) -> Result
 CreatePipelineLayout_func_ptr_anon_18 :: #type proc "c" (
 	device: ^Device,
-	pipelineLayoutDesc: ^Pipeline_Layout_Desc,
+	#by_ptr pipelineLayoutDesc: Pipeline_Layout_Desc,
 	pipelineLayout: ^^Pipeline_Layout,
 ) -> Result
 CreateGraphicsPipeline_func_ptr_anon_19 :: #type proc "c" (
 	device: ^Device,
-	graphicsPipelineDesc: ^Graphics_Pipeline_Desc,
+	#by_ptr graphicsPipelineDesc: Graphics_Pipeline_Desc,
 	pipeline: ^^Pipeline,
 ) -> Result
 CreateComputePipeline_func_ptr_anon_20 :: #type proc "c" (
 	device: ^Device,
-	computePipelineDesc: ^Compute_Pipeline_Desc,
+	#by_ptr computePipelineDesc: Compute_Pipeline_Desc,
 	pipeline: ^^Pipeline,
 ) -> Result
 CreateQueryPool_func_ptr_anon_21 :: #type proc "c" (
 	device: ^Device,
-	queryPoolDesc: ^Query_Pool_Desc,
+	#by_ptr queryPoolDesc: Query_Pool_Desc,
 	queryPool: ^^Query_Pool,
 ) -> Result
 CreateFence_func_ptr_anon_22 :: #type proc "c" (
@@ -1291,7 +1284,7 @@ CreateFence_func_ptr_anon_22 :: #type proc "c" (
 	initialValue: u64,
 	fence: ^^Fence,
 ) -> Result
-DestroyCommandAllocator_func_ptr_anon_23 :: #type proc "c" (commandAllocator: ^CommandAllocator)
+DestroyCommandAllocator_func_ptr_anon_23 :: #type proc "c" (commandAllocator: ^Command_Allocator)
 DestroyCommandBuffer_func_ptr_anon_24 :: #type proc "c" (commandBuffer: ^Command_Buffer)
 DestroyDescriptorPool_func_ptr_anon_25 :: #type proc "c" (descriptorPool: ^Descriptor_Pool)
 DestroyBuffer_func_ptr_anon_26 :: #type proc "c" (buffer: ^Buffer)
@@ -1303,7 +1296,7 @@ DestroyQueryPool_func_ptr_anon_31 :: #type proc "c" (queryPool: ^Query_Pool)
 DestroyFence_func_ptr_anon_32 :: #type proc "c" (fence: ^Fence)
 AllocateMemory_func_ptr_anon_33 :: #type proc "c" (
 	device: ^Device,
-	allocateMemoryDesc: ^Allocate_Memory_Desc,
+	#by_ptr allocateMemoryDesc: Allocate_Memory_Desc,
 	memory: ^^Memory,
 ) -> Result
 BindBufferMemory_func_ptr_anon_34 :: #type proc "c" (
@@ -1352,7 +1345,7 @@ CmdSetPipeline_func_ptr_anon_43 :: #type proc "c" (
 )
 CmdBarrier_func_ptr_anon_44 :: #type proc "c" (
 	commandBuffer: ^Command_Buffer,
-	barrierGroupDesc: ^Barrier_Group_Desc,
+	#by_ptr barrierGroupDesc: Barrier_Group_Desc,
 )
 CmdSetIndexBuffer_func_ptr_anon_45 :: #type proc "c" (
 	commandBuffer: ^Command_Buffer,
@@ -1399,15 +1392,15 @@ CmdSetSampleLocations_func_ptr_anon_52 :: #type proc "c" (
 )
 CmdSetShadingRate_func_ptr_anon_53 :: #type proc "c" (
 	commandBuffer: ^Command_Buffer,
-	shadingRateDesc: ^Shading_Rate_Desc,
+	#by_ptr shadingRateDesc: Shading_Rate_Desc,
 )
 CmdSetDepthBias_func_ptr_anon_54 :: #type proc "c" (
 	commandBuffer: ^Command_Buffer,
-	depthBiasDesc: ^Depth_Bias_Desc,
+	#by_ptr depthBiasDesc: Depth_Bias_Desc,
 )
 CmdBeginRendering_func_ptr_anon_55 :: #type proc "c" (
 	commandBuffer: ^Command_Buffer,
-	attachmentsDesc: ^Attachments_Desc,
+	#by_ptr attachmentsDesc: Attachments_Desc,
 )
 CmdClearAttachments_func_ptr_anon_56 :: #type proc "c" (
 	commandBuffer: ^Command_Buffer,
@@ -1416,10 +1409,13 @@ CmdClearAttachments_func_ptr_anon_56 :: #type proc "c" (
 	rects: [^]Rect,
 	rectNum: u32,
 )
-CmdDraw_func_ptr_anon_57 :: #type proc "c" (commandBuffer: ^Command_Buffer, drawDesc: ^Draw_Desc)
+CmdDraw_func_ptr_anon_57 :: #type proc "c" (
+	commandBuffer: ^Command_Buffer,
+	#by_ptr drawDesc: Draw_Desc,
+)
 CmdDrawIndexed_func_ptr_anon_58 :: #type proc "c" (
 	commandBuffer: ^Command_Buffer,
-	drawIndexedDesc: ^Draw_Indexed_Desc,
+	#by_ptr drawIndexedDesc: Draw_Indexed_Desc,
 )
 CmdDrawIndirect_func_ptr_anon_59 :: #type proc "c" (
 	commandBuffer: ^Command_Buffer,
@@ -1442,7 +1438,7 @@ CmdDrawIndexedIndirect_func_ptr_anon_60 :: #type proc "c" (
 CmdEndRendering_func_ptr_anon_61 :: #type proc "c" (commandBuffer: ^Command_Buffer)
 CmdDispatch_func_ptr_anon_62 :: #type proc "c" (
 	commandBuffer: ^Command_Buffer,
-	dispatchDesc: ^Dispatch_Desc,
+	#by_ptr dispatchDesc: Dispatch_Desc,
 )
 CmdDispatchIndirect_func_ptr_anon_63 :: #type proc "c" (
 	commandBuffer: ^Command_Buffer,
@@ -1460,38 +1456,38 @@ CmdCopyBuffer_func_ptr_anon_64 :: #type proc "c" (
 CmdCopyTexture_func_ptr_anon_65 :: #type proc "c" (
 	commandBuffer: ^Command_Buffer,
 	dstTexture: ^Texture,
-	dstRegionDesc: ^Texture_Region_Desc,
+	#by_ptr dstRegionDesc: Texture_Region_Desc,
 	srcTexture: ^Texture,
-	srcRegionDesc: ^Texture_Region_Desc,
+	#by_ptr srcRegionDesc: Texture_Region_Desc,
 )
 CmdResolveTexture_func_ptr_anon_66 :: #type proc "c" (
 	commandBuffer: ^Command_Buffer,
 	dstTexture: ^Texture,
-	dstRegionDesc: ^Texture_Region_Desc,
+	#by_ptr dstRegionDesc: Texture_Region_Desc,
 	srcTexture: ^Texture,
-	srcRegionDesc: ^Texture_Region_Desc,
+	#by_ptr srcRegionDesc: Texture_Region_Desc,
 )
 CmdUploadBufferToTexture_func_ptr_anon_67 :: #type proc "c" (
 	commandBuffer: ^Command_Buffer,
 	dstTexture: ^Texture,
-	dstRegionDesc: ^Texture_Region_Desc,
+	#by_ptr dstRegionDesc: Texture_Region_Desc,
 	srcBuffer: ^Buffer,
-	srcDataLayoutDesc: ^Texture_Data_Layout_Desc,
+	#by_ptr srcDataLayoutDesc: Texture_Data_Layout_Desc,
 )
 CmdReadbackTextureToBuffer_func_ptr_anon_68 :: #type proc "c" (
 	commandBuffer: ^Command_Buffer,
 	dstBuffer: ^Buffer,
-	dstDataLayoutDesc: ^Texture_Data_Layout_Desc,
+	#by_ptr dstDataLayoutDesc: Texture_Data_Layout_Desc,
 	srcTexture: ^Texture,
-	srcRegionDesc: ^Texture_Region_Desc,
+	#by_ptr srcRegionDesc: Texture_Region_Desc,
 )
 CmdClearStorageBuffer_func_ptr_anon_69 :: #type proc "c" (
 	commandBuffer: ^Command_Buffer,
-	clearDesc: ^Clear_Storage_Buffer_Desc,
+	#by_ptr clearDesc: Clear_Storage_Buffer_Desc,
 )
 CmdClearStorageTexture_func_ptr_anon_70 :: #type proc "c" (
 	commandBuffer: ^Command_Buffer,
-	clearDesc: ^Clear_Storage_Texture_Desc,
+	#by_ptr clearDesc: Clear_Storage_Texture_Desc,
 )
 CmdResetQueries_func_ptr_anon_71 :: #type proc "c" (
 	commandBuffer: ^Command_Buffer,
@@ -1525,7 +1521,7 @@ CmdEndAnnotation_func_ptr_anon_76 :: #type proc "c" (commandBuffer: ^Command_Buf
 EndCommandBuffer_func_ptr_anon_77 :: #type proc "c" (commandBuffer: ^Command_Buffer) -> Result
 QueueSubmit_func_ptr_anon_78 :: #type proc "c" (
 	commandQueue: ^Command_Queue,
-	queueSubmitDesc: ^Queue_Submit_Desc,
+	#by_ptr queueSubmitDesc: Queue_Submit_Desc,
 )
 Wait_func_ptr_anon_79 :: #type proc "c" (fence: ^Fence, value: u64)
 GetFenceValue_func_ptr_anon_80 :: #type proc "c" (fence: ^Fence) -> u64
@@ -1543,7 +1539,7 @@ UpdateDynamicConstantBuffers_func_ptr_anon_82 :: #type proc "c" (
 )
 CopyDescriptorSet_func_ptr_anon_83 :: #type proc "c" (
 	descriptorSet: ^Descriptor_Set,
-	descriptorSetCopyDesc: ^Descriptor_Set_Copy_Desc,
+	#by_ptr descriptorSetCopyDesc: Descriptor_Set_Copy_Desc,
 )
 AllocateDescriptorSets_func_ptr_anon_84 :: #type proc "c" (
 	descriptorPool: ^Descriptor_Pool,
@@ -1554,7 +1550,7 @@ AllocateDescriptorSets_func_ptr_anon_84 :: #type proc "c" (
 	variableDescriptorNum: u32,
 ) -> Result
 ResetDescriptorPool_func_ptr_anon_85 :: #type proc "c" (descriptorPool: ^Descriptor_Pool)
-ResetCommandAllocator_func_ptr_anon_86 :: #type proc "c" (commandAllocator: ^CommandAllocator)
+ResetCommandAllocator_func_ptr_anon_86 :: #type proc "c" (commandAllocator: ^Command_Allocator)
 MapBuffer_func_ptr_anon_87 :: #type proc "c" (buffer: ^Buffer, offset: u64, size: u64) -> rawptr
 UnmapBuffer_func_ptr_anon_88 :: #type proc "c" (buffer: ^Buffer)
 SetDeviceDebugName_func_ptr_anon_89 :: #type proc "c" (device: ^Device, name: cstring)
@@ -1572,7 +1568,7 @@ SetCommandQueueDebugName_func_ptr_anon_96 :: #type proc "c" (
 	name: cstring,
 )
 SetCommandAllocatorDebugName_func_ptr_anon_97 :: #type proc "c" (
-	commandAllocator: ^CommandAllocator,
+	commandAllocator: ^Command_Allocator,
 	name: cstring,
 )
 SetDescriptorPoolDebugName_func_ptr_anon_98 :: #type proc "c" (
