@@ -1820,6 +1820,8 @@ Display_Desc :: struct {
 
 Swap_Chain :: distinct rawptr
 
+SWAPCHAIN_SEMAPHORE :: ~u64(0)
+
 Swap_Chain_Interface :: struct {
 	CreateSwapChain:             proc "c" (
 		device: ^Device,
