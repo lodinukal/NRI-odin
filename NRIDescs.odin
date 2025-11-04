@@ -1650,11 +1650,11 @@ TextureBarrierDesc :: struct {
 }
 
 BarrierDesc :: struct {
-	globals:    ^GlobalBarrierDesc,
+	globals:    [^]GlobalBarrierDesc,
 	globalNum:  u32,
-	buffers:    ^BufferBarrierDesc,
+	buffers:    [^]BufferBarrierDesc,
 	bufferNum:  u32,
-	textures:   ^TextureBarrierDesc,
+	textures:   [^]TextureBarrierDesc,
 	textureNum: u32,
 }
 
@@ -2029,7 +2029,7 @@ DescriptorRangeDesc :: struct {
 // "DescriptorSet" consists of "DescriptorRange" entities
 DescriptorSetDesc :: struct {
 	registerSpace: u32, // must be unique, avoid big gaps
-	ranges:        ^DescriptorRangeDesc,
+	ranges:        [^]DescriptorRangeDesc,
 	rangeNum:      u32,
 	flags:         DescriptorSetBits,
 }
@@ -2059,13 +2059,13 @@ RootSamplerDesc :: struct {
 // https://microsoft.github.io/DirectX-Specs/d3d/ResourceBinding.html#root-signature-version-11
 PipelineLayoutDesc :: struct {
 	rootRegisterSpace: u32, // must be unique, avoid big gaps
-	rootConstants:     ^RootConstantDesc,
+	rootConstants:     [^]RootConstantDesc,
 	rootConstantNum:   u32,
-	rootDescriptors:   ^RootDescriptorDesc,
+	rootDescriptors:   [^]RootDescriptorDesc,
 	rootDescriptorNum: u32,
-	rootSamplers:      ^RootSamplerDesc,
+	rootSamplers:      [^]RootSamplerDesc,
 	rootSamplerNum:    u32,
-	descriptorSets:    ^DescriptorSetDesc,
+	descriptorSets:    [^]DescriptorSetDesc,
 	descriptorSetNum:  u32,
 	shaderStages:      StageBits,
 	flags:             PipelineLayoutBits,
@@ -2108,7 +2108,7 @@ UpdateDescriptorRangeDesc :: struct {
 	baseDescriptor: u32,
 
 	// Source & count
-	descriptors:    ^^Descriptor,
+	descriptors:    [^]^Descriptor,
 	descriptorNum:  u32,
 }
 
@@ -2220,9 +2220,9 @@ VertexStreamDesc :: struct {
 }
 
 VertexInputDesc :: struct {
-	attributes:   ^VertexAttributeDesc,
+	attributes:   [^]VertexAttributeDesc,
 	attributeNum: u8,
-	streams:      ^VertexStreamDesc,
+	streams:      [^]VertexStreamDesc,
 	streamNum:    u8,
 }
 
@@ -2697,7 +2697,7 @@ ColorAttachmentDesc :: struct {
 }
 
 OutputMergerDesc :: struct {
-	colors:             ^ColorAttachmentDesc,
+	colors:             [^]ColorAttachmentDesc,
 	colorNum:           u32,
 	depth:              DepthAttachmentDesc,
 	stencil:            StencilAttachmentDesc,
@@ -2710,7 +2710,7 @@ OutputMergerDesc :: struct {
 AttachmentsDesc :: struct {
 	depthStencil: ^Descriptor,
 	shadingRate:  ^Descriptor, // requires "tiers.shadingRate >= 2"
-	colors:       ^^Descriptor,
+	colors:       [^]^Descriptor,
 	colorNum:     u32,
 	viewMask:     u32, // if non-0, requires "viewMaxNum > 1"
 }
@@ -2739,7 +2739,7 @@ GraphicsPipelineDesc :: struct {
 	rasterization:  RasterizationDesc,
 	multisample:    ^MultisampleDesc,
 	outputMerger:   OutputMergerDesc,
-	shaders:        ^ShaderDesc,
+	shaders:        [^]ShaderDesc,
 	shaderNum:      u32,
 	robustness:     Robustness,
 }
@@ -2862,11 +2862,11 @@ FenceSubmitDesc :: struct {
 }
 
 QueueSubmitDesc :: struct {
-	waitFences:       ^FenceSubmitDesc,
+	waitFences:       [^]FenceSubmitDesc,
 	waitFenceNum:     u32,
-	commandBuffers:   ^^CommandBuffer,
+	commandBuffers:   [^]^CommandBuffer,
 	commandBufferNum: u32,
-	signalFences:     ^FenceSubmitDesc,
+	signalFences:     [^]FenceSubmitDesc,
 	signalFenceNum:   u32,
 	swapChain:        ^SwapChain, // required if "NRILowLatency" is enabled in the swap chain
 }

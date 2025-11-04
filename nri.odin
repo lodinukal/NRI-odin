@@ -214,11 +214,11 @@ CoreInterface :: struct {
 		memoryDesc: ^MemoryDesc,
 	),
 	BindBufferMemory:             proc "c" (
-		bindBufferMemoryDescs: ^BindBufferMemoryDesc,
+		bindBufferMemoryDescs: [^]BindBufferMemoryDesc,
 		bindBufferMemoryDescNum: u32,
 	) -> Result,
 	BindTextureMemory:            proc "c" (
-		bindTextureMemoryDescs: ^BindTextureMemoryDesc,
+		bindTextureMemoryDescs: [^]BindTextureMemoryDesc,
 		bindTextureMemoryDescNum: u32,
 	) -> Result,
 
@@ -274,16 +274,16 @@ CoreInterface :: struct {
 		descriptorPool: ^DescriptorPool,
 		pipelineLayout: ^PipelineLayout,
 		setIndex: u32,
-		descriptorSets: ^^DescriptorSet,
+		descriptorSets: [^]^DescriptorSet,
 		instanceNum: u32,
 		variableDescriptorNum: u32,
 	) -> Result,
 	UpdateDescriptorRanges:       proc "c" (
-		updateDescriptorRangeDescs: ^UpdateDescriptorRangeDesc,
+		updateDescriptorRangeDescs: [^]UpdateDescriptorRangeDesc,
 		updateDescriptorRangeDescNum: u32,
 	),
 	CopyDescriptorRanges:         proc "c" (
-		copyDescriptorRangeDescs: ^CopyDescriptorRangeDesc,
+		copyDescriptorRangeDescs: [^]CopyDescriptorRangeDesc,
 		copyDescriptorRangeDescNum: u32,
 	),
 	ResetDescriptorPool:          proc "c" (descriptorPool: ^DescriptorPool),
@@ -339,19 +339,19 @@ CoreInterface :: struct {
 	CmdSetVertexBuffers:          proc "c" (
 		commandBuffer: ^CommandBuffer,
 		baseSlot: u32,
-		vertexBufferDescs: ^VertexBufferDesc,
+		vertexBufferDescs: [^]VertexBufferDesc,
 		vertexBufferNum: u32,
 	),
 
 	// Initial state
 	CmdSetViewports:              proc "c" (
 		commandBuffer: ^CommandBuffer,
-		viewports: ^Viewport,
+		viewports: [^]Viewport,
 		viewportNum: u32,
 	),
 	CmdSetScissors:               proc "c" (
 		commandBuffer: ^CommandBuffer,
-		rects: ^Rect,
+		rects: [^]Rect,
 		rectNum: u32,
 	),
 
@@ -369,7 +369,7 @@ CoreInterface :: struct {
 	CmdSetBlendConstants:         proc "c" (commandBuffer: ^CommandBuffer, color: ^Color32f),
 	CmdSetSampleLocations:        proc "c" (
 		commandBuffer: ^CommandBuffer,
-		locations: ^SampleLocation,
+		locations: [^]SampleLocation,
 		locationNum: Sample_t,
 		sampleNum: Sample_t,
 	), // requires "tiers.sampleLocations != 0"
@@ -394,9 +394,9 @@ CoreInterface :: struct {
 	// Fast clear
 	CmdClearAttachments:          proc "c" (
 		commandBuffer: ^CommandBuffer,
-		clearDescs: ^ClearDesc,
+		clearDescs: [^]ClearDesc,
 		clearDescNum: u32,
-		rects: ^Rect,
+		rects: [^]Rect,
 		rectNum: u32,
 	),
 

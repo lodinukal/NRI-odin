@@ -109,7 +109,7 @@ DeviceCreationDesc :: struct {
 
 @(default_calling_convention = "c", link_prefix = "nri")
 foreign lib {
-	EnumerateAdapters :: proc(adapterDescs: ^AdapterDesc, adapterDescNum: ^u32) -> Result ---
+	EnumerateAdapters :: proc(adapterDescs: [^]AdapterDesc, adapterDescNum: ^u32) -> Result ---
 	CreateDevice :: proc(deviceCreationDesc: ^DeviceCreationDesc, device: ^^Device) -> Result ---
 	DestroyDevice :: proc(device: ^Device) ---
 	ReportLiveObjects :: proc() ---
@@ -142,9 +142,9 @@ BufferUploadDesc :: struct {
 
 ResourceGroupDesc :: struct {
 	memoryLocation:      MemoryLocation,
-	textures:            ^^Texture,
+	textures:            [^]^Texture,
 	textureNum:          u32,
-	buffers:             ^^Buffer,
+	buffers:             [^]^Buffer,
 	bufferNum:           u32,
 	preferredMemorySize: u64,
 }
@@ -185,9 +185,9 @@ HelperInterface :: struct {
 	) -> Result,
 	UploadData:                proc "c" (
 		queue: ^Queue,
-		textureUploadDescs: ^TextureUploadDesc,
+		textureUploadDescs: [^]TextureUploadDesc,
 		textureUploadDescNum: u32,
-		bufferUploadDescs: ^BufferUploadDesc,
+		bufferUploadDescs: [^]BufferUploadDesc,
 		bufferUploadDescNum: u32,
 	) -> Result,
 	QueryVideoMemoryInfo:      proc "c" (
@@ -227,14 +227,14 @@ ImguiDesc :: struct {
 }
 
 CopyImguiDataDesc :: struct {
-	drawLists:   ^^ImDrawList,
+	drawLists:   [^]^ImDrawList,
 	drawListNum: u32,
-	textures:    ^^ImTextureData,
+	textures:    [^]^ImTextureData,
 	textureNum:  u32,
 }
 
 DrawImguiDesc :: struct {
-	drawLists:        ^^ImDrawList,
+	drawLists:        [^]^ImDrawList,
 	drawListNum:      u32,
 	displaySize:      Dim2_t,
 	hdrScale:         f32,
@@ -708,7 +708,7 @@ RayTracingInterface :: struct {
 	),
 	CmdWriteAccelerationStructuresSizes:             proc "c" (
 		commandBuffer: ^CommandBuffer,
-		accelerationStructures: ^^AccelerationStructure,
+		accelerationStructures: [^]^AccelerationStructure,
 		accelerationStructureNum: u32,
 		queryPool: ^QueryPool,
 		queryPoolOffset: u32,
