@@ -1523,31 +1523,7 @@ STAGEBITS_GRAPHICS :: StageBits {
 	.DEPTH_STENCIL_ATTACHMENT,
 	.COLOR_ATTACHMENT,
 }
-STAGEBITS_NONE :: StageBits {
-	.INDEX_INPUT,
-	.VERTEX_SHADER,
-	.TESS_CONTROL_SHADER,
-	.TESS_EVALUATION_SHADER,
-	.GEOMETRY_SHADER,
-	.TASK_SHADER,
-	.MESH_SHADER,
-	.FRAGMENT_SHADER,
-	.DEPTH_STENCIL_ATTACHMENT,
-	.COLOR_ATTACHMENT,
-	.COMPUTE_SHADER,
-	.RAYGEN_SHADER,
-	.MISS_SHADER,
-	.INTERSECTION_SHADER,
-	.CLOSEST_HIT_SHADER,
-	.ANY_HIT_SHADER,
-	.CALLABLE_SHADER,
-	.ACCELERATION_STRUCTURE,
-	.MICROMAP,
-	.COPY,
-	.RESOLVE,
-	.CLEAR_STORAGE,
-	.INDIRECT,
-}
+STAGEBITS_NONE :: transmute(StageBits)(u32(0x7FFFFFFF))
 STAGEBITS_RAY_TRACING_SHADERS :: StageBits {
 	.RAYGEN_SHADER,
 	.MISS_SHADER,
@@ -1981,13 +1957,13 @@ PipelineLayoutBitsEnum :: enum i32 {
 PipelineLayoutBits :: bit_set[PipelineLayoutBitsEnum;u8]
 
 DescriptorPoolBitsEnum :: enum i32 {
-	NriDescriptorPoolBits_ALLOW_UPDATE_AFTER_SET = 0,
+	ALLOW_UPDATE_AFTER_SET = 0,
 }
 
 DescriptorPoolBits :: bit_set[DescriptorPoolBitsEnum;u8]
 
 DescriptorSetBitsEnum :: enum i32 {
-	NriDescriptorSetBits_ALLOW_UPDATE_AFTER_SET = 0,
+	ALLOW_UPDATE_AFTER_SET = 0,
 }
 
 DescriptorSetBits :: bit_set[DescriptorSetBitsEnum;u8]
